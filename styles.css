@@ -94,6 +94,12 @@ body {
     height: auto;
 }
 
+.header-text {
+    flex: 1; /* This ensures the text takes up the available space */
+    padding-left: 65px;
+    text-align: center; /* Adjust text alignment if needed */
+}
+
 .Logo
 {
     max-width: 4%;
