@@ -93,3 +93,11 @@ body {
     max-width: 10%;
     height: auto;
 }
+
+.Logo
+{
+    max-width: 4%;
+    float: right;
+    height: auto; 
+    margin-top: -10px;
+}
