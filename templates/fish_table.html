@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <tr>
+            <th>Fish Caught</th>
+            <th>Size of Fish</th>
+            <th>Bait</th>
+            <th>Pond Caught</th>
+            <th>Date of Catch</th>
+            <th>Time of Catch</th>
+            <th>Catcher</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fish in fish_list %}
+        <tr>
+            <td>{{ fish.fishcaught }}</td>
+            <td>{{ fish.sizeoffish }}</td>
+            <td>{{ fish.bait }}</td>
+            <td>{{ fish.pondcaught }}</td>
+            <td>{{ fish.dateofcatch }}</td>
+            <td>{{ fish.timeofcatch }}</td>
+            <td>{{ fish.catcher }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

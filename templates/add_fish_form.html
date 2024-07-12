@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Fish Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='Images/ico.png') }}">
+</head>
+<body class="page-default">
+    <div class="wrapper">
+        <main class="main-default">
+            <section id="add-fish-form" class="section-default">
+                <form action="/add_fish" method="POST">
+                    <label for="fish-caught">Fish Caught:</label>
+                    <select id="fish-caught" name="fish_caught">
+                        <option value="Blue Gill">Blue Gill</option>
+                        <option value="Crappie">Crappie</option>
+                        <option value="Sloppy Mouth">Sloppy Mouth</option>
+                    </select>
+                    <br><br>
+                    
+                    <label for="size-of-fish">Size of Fish:</label>
+                    <select id="size-of-fish" name="size_of_fish">
+                        <option value="Baby">Baby</option>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                        <option value="Monster">Monster</option>
+                    </select>
+                    <br><br>
+                    
+                    <label for="bait">Bait:</label>
+                    <select id="bait" name="bait">
+                        <option value="Spunky">Spunky</option>
+                        <option value="Buzzbait">Buzzbait</option>
+                        <option value="Crankbait">Crankbait</option>
+                        <option value="Chatterbait">Chatterbait</option>
+                        <option value="Jitterbug">Jitterbug</option>
+                        <option value="Frog">Frog</option>
+                        <option value="Whopper Plopper">Whopper Plopper</option>
+                        <option value="Texas Rig">Texas Rig</option>
+                        <option value="Wacky Worm">Wacky Worm</option>
+                        <option value="Jerkbait">Jerkbait</option>
+                        <option value="Soft Plastic">Soft Plastic</option>
+                        <option value="Popper">Popper</option>
+                        <option value="Jig">Jig</option>
+                        <option value="Swimbait">Swimbait</option>
+                        <option value="Misc">Misc</option>
+                        <option value="Spoon">Spoon</option>
+                        <option value="Misc Topwater">Misc Topwater</option>
+                        <option value="Spinner">Spinner</option>
+                    </select>
+                    <br><br>
+                    
+                    <label for="pond-caught">Pond Caught:</label>
+                    <select id="pond-caught" name="pond_caught">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                    <br><br>
+                    
+                    <label for="date-of-catch">Date of Catch (MM/DD/YY):</label>
+                    <input type="text" id="date-of-catch" name="date_of_catch" placeholder="MM/DD/YY">
+                    <br><br>
+                    
+                    <label for="time-of-catch">Time of Catch:</label>
+                    <select id="time-of-catch" name="time_of_catch">
+                        <option value="morning">Morning</option>
+                        <option value="afternoon">Afternoon</option>
+                        <option value="evening">Evening</option>
+                    </select>
+                    <br><br>
+                    
+                    <label for="catcher">Catcher:</label>
+                    <select id="catcher" name="catcher">
+                        <option value="Sam">Sam</option>
+                        <option value="Hunter">Hunter</option>
+                        <option value="Kob">Kob</option>
+                        <option value="May">May</option>
+                        <option value="Colin">Colin</option>
+                        <option value="Emily">Emily</option>
+                        <option value="Bob">Bob</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <br><br>
+                    
+                    <label for="image-url">Picture (URL):</label>
+                    <input type="text" id="image-url" name="image_url" placeholder="Enter URL">
+                    <br><br>
+                    
+                    <input type="submit" value="Add Fish">
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

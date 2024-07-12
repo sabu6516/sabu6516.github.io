@@ -18,15 +18,46 @@
         <nav class="nav-default">
             <ul>
                 <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('login') }}">SlopBase</a></li>
-                <li><a href="{{ url_for('signup') }}">Leaderboard</a></li>
+                <li><a href="{{ url_for('database') }}">SlopBase</a></li>
+                <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="{{ url_for('view_bookbag') }}">Contact</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
             </ul>
         </nav>
         <main class="main-default">
-            <section id="SlopBase" class="section-default">
-                <p>The SlopBase will go here, including entry and data visualization.</p>
+            <section id="fish-list" class="section-default">
+                <!-- Display fish list here -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fish Caught</th>
+                            <th>Size of Fish</th>
+                            <th>Bait</th>
+                            <th>Pond Caught</th>
+                            <th>Date of Catch</th>
+                            <th>Time of Catch</th>
+                            <th>Catcher</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fish in fish_list %}
+                        <tr>
+                            <td>{{ fish.fishcaught }}</td>
+                            <td>{{ fish.sizeoffish }}</td>
+                            <td>{{ fish.bait }}</td>
+                            <td>{{ fish.pondcaught }}</td>
+                            <td>{{ fish.dateofcatch }}</td>
+                            <td>{{ fish.timeofcatch }}</td>
+                            <td>{{ fish.catcher }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            <section id="add-fish-section" class="section-default">
+                <!-- Include the add fish form directly here -->
+                {% include 'add_fish_form.html' %}
             </section>
         </main>
     </div>
