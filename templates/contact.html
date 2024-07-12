@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="Images/ico.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='Images/ico.png') }}">
 </head>
 <body class="page-default">
     <div class="wrapper">
         <header class="header-default">
-            <img src="Images/Sloppy.png" class="Logo">
+            <img src="{{ url_for('static', filename='Images/Sloppy.png') }}" class="Logo">
             <div class="header-text">
                 <h1>Contact Us</h1>
             </div>
         </header>
         <nav class="nav-default">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="database.html">SlopBase</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">SlopBase</a></li>
+                <li><a href="{{ url_for('signup') }}">Leaderboard</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('view_bookbag') }}">Contact</a></li>
             </ul>
         </nav>
         <main class="main-default">
@@ -36,7 +36,7 @@
             <section id="contact" class="section-default">
                 <p><b>CO DEV:</b></p>
                 <p>hunter.baker.b@gmail.com</p>
-                <a target="_blank"href="https://github.com/hutnerr">Github</a>
+                <a target="_blank" href="https://github.com/hutnerr">Github</a>
                 <br>
                 <a target="_blank" href="https://www.linkedin.com/in/hunter-b-baker">LinkedIn</a>    
             </section>

@@ -4,62 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="Images/ico.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='Images/ico.png') }}">
 </head>
 <body class="page-default">
     <div class="wrapper">
         <header class="header-default">
-            <img src="Images/Sloppy.png" class="Logo">
+            <img src="{{ url_for('static', filename='Images/Sloppy.png') }}" class="Logo">
             <div class="header-text">
                 <h1>Leaderboard</h1>
             </div>
         </header>
         <nav class="nav-default">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="database.html">SlopBase</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">SlopBase</a></li>
+                <li><a href="{{ url_for('signup') }}">Leaderboard</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('view_bookbag') }}">Contact</a></li>
             </ul>
         </nav>
-        <main class="main-default">
-        </main>
         <main class="main-default">
             <h1>#1: The Goliath</h1>
             <div class="LB-image-and-text">
                 <div class="LBPics">
-                    <img src="Images/LB1.jpg" class="LBPics-inner">
+                    <img src="{{ url_for('static', filename='Images/LB1.jpg') }}" class="LBPics-inner">
                 </div>
                 <div class="LB-text">
-                <section id="Leaderboard" class="section-default">
-                    At Pond 6, our co-founder Hunter embarked on a legendary fishing expedition that would etch his name in the annals of angling lore. 
-                    It was a crisp afternoon, the mist swirling over the tranquil waters, when Hunter's line suddenly went taut with the unmistakable force of a behemoth lurking below—the Goliath Sloppy Mouth.
-                    With adrenaline pumping, Hunter deftly maneuvered his rod, engaging in a titanic battle of wills with the monstrous bass. 
-                    The Sloppy Mouth, known for its cunning and sheer strength, surged and twisted, testing Hunter's skill and resolve. In a heart-pounding moment, 
-                    the fish nearly slipped from his grasp, but Hunter, drawing on years of experience, expertly guided it towards the shore.
-                    <br><br>
-                    However, the Sloppy Mouth wasn't ready to surrender just yet. Sensing freedom, it darted towards a submerged log, threatening to escape into the depths. 
-                    With lightning reflexes, Hunter strategically positioned himself, blocking the fish's path and turning the tide of the struggle. With a final burst of effort, 
-                    he secured the colossal bass, a testament to his unwavering determination and mastery of the sport.
-                    The bait that lured the mighty Sloppy Mouth—a spunky sperm bait, meticulously chosen for its irresistible allure—proved pivotal in Hunter's triumph. 
-                    This iconic bait, a staple in every seasoned Slopperman's toolkit, played a crucial role in capturing the largest Sloppy Mouth bass ever recorded to date.
-                    <br><br>
-                    Despite Hunter's monumental achievement, whispers now circulate among anglers and locals alike of an even larger leviathan prowling the depths of Pond 6, 
-                    rumored to be waiting patiently for the perfect moment to strike—a monstrous bass of legendary proportions, said to dwarf even the formidable Goliath Sloppy Mouth.
-                    As dawn breaks over Pond 6, the mystery of this elusive giant continues to captivate the imaginations of all who cast their lines into its murky waters, 
-                    keeping alive the age-old allure of the hunt for the ultimate trophy fish—a quest that Hunter's epic encounter has only amplified.
-                </section>
-            </div>
+                    <section id="Leaderboard" class="section-default">
+                        <p>At Pond 6, our co-founder Hunter embarked on a legendary fishing expedition that would etch his name in the annals of angling lore. 
+                        It was a crisp afternoon, the mist swirling over the tranquil waters, when Hunter's line suddenly went taut with the unmistakable force of a behemoth lurking below—the Goliath Sloppy Mouth.
+                        With adrenaline pumping, Hunter deftly maneuvered his rod, engaging in a titanic battle of wills with the monstrous bass. 
+                        The Sloppy Mouth, known for its cunning and sheer strength, surged and twisted, testing Hunter's skill and resolve. In a heart-pounding moment, 
+                        the fish nearly slipped from his grasp, but Hunter, drawing on years of experience, expertly guided it towards the shore.
+                        <br><br>
+                        However, the Sloppy Mouth wasn't ready to surrender just yet. Sensing freedom, it darted towards a submerged log, threatening to escape into the depths. 
+                        With lightning reflexes, Hunter strategically positioned himself, blocking the fish's path and turning the tide of the struggle. With a final burst of effort, 
+                        he secured the colossal bass, a testament to his unwavering determination and mastery of the sport.
+                        The bait that lured the mighty Sloppy Mouth—a spunky sperm bait, meticulously chosen for its irresistible allure—proved pivotal in Hunter's triumph. 
+                        This iconic bait, a staple in every seasoned Slopperman's toolkit, played a crucial role in capturing the largest Sloppy Mouth bass ever recorded to date.
+                        <br><br>
+                        Despite Hunter's monumental achievement, whispers now circulate among anglers and locals alike of an even larger leviathan prowling the depths of Pond 6, 
+                        rumored to be waiting patiently for the perfect moment to strike—a monstrous bass of legendary proportions, said to dwarf even the formidable Goliath Sloppy Mouth.
+                        As dawn breaks over Pond 6, the mystery of this elusive giant continues to captivate the imaginations of all who cast their lines into its murky waters, 
+                        keeping alive the age-old allure of the hunt for the ultimate trophy fish—a quest that Hunter's epic encounter has only amplified.
+                        </p>
+                    </section>
+                </div>
             </div>
             <h1>#2: The Lean Bandit</h1>
             <div class="LB-image-and-text">
                 <div class="LBPics">
-                    <img src="Images/LB2.jpg" class="LBPics-inner">
+                    <img src="{{ url_for('static', filename='Images/LB2.jpg') }}" class="LBPics-inner">
                 </div>
                 <section id="Leaderboard" class="section-default">
-                    In the tranquil waters of Pond 3, unfolds a tale of angling prowess centered around The Lean Bandit, a legendary Sloppy Mouth bass whose capture would become the stuff of local legend. 
+                    <p>In the tranquil waters of Pond 3, unfolds a tale of angling prowess centered around The Lean Bandit, a legendary Sloppy Mouth bass whose capture would become the stuff of local legend. 
                     It was a serene afternoon when Sam, a seasoned angler known for his keen eye and steady hand, spotted a disturbance among the lily pads—a telltale sign of The Lean Bandit's presence.
                     With years of fishing finesse guiding him, Sam deftly cast his line towards the heart of the lily pads, where shadows flickered beneath the surface. 
                     <br><br>
@@ -74,15 +73,16 @@
                     The lure that tempted The Lean Bandit—a mysterious wacky worm, spoken of in hushed tones among local anglers—remains cloaked in speculation. 
                     Its elusive allure only adds to the mystique surrounding this legendary Sloppy Mouth bass, whose capture stands as a testament to the thrill of the chase and the enduring appeal of Pond 3's waters.
                     As Sam's tale echoes through the tranquil corners of Pond 3, legends of other giants lurking in its depths persist—each awaiting their moment to challenge the resolve of those who dare to cast their lines into its labyrinthine waters, perpetuating the timeless allure of the angler's pursuit.
+                    </p>
                 </section>
             </div>
             <h1>#3: Big Jimmy</h1>
             <div class="LB-image-and-text">
                 <div class="LBPics">
-                    <img src="Images/LB3.jpg" class="LBPics-inner">
+                    <img src="{{ url_for('static', filename='Images/LB3.jpg') }}" class="LBPics-inner">
                 </div>
                 <section id="Leaderboard" class="section-default">
-                    In the hallowed waters of Pond 6, a tale unfolds that speaks of Big Jimmy, a Sloppy Mouth bass rumored to be the offspring of the legendary Goliath Sloppy Mouth. 
+                    <p>In the hallowed waters of Pond 6, a tale unfolds that speaks of Big Jimmy, a Sloppy Mouth bass rumored to be the offspring of the legendary Goliath Sloppy Mouth. 
                     This fish had garnered a reputation as a formidable adversary among local anglers, known for its size and cunning. 
                     It was on a dreary evening when Kob, a seasoned fisherman well-versed in the lore of Pond 6, ventured forth in pursuit of this elusive giant.
                     With the patience cultivated over years spent on Pond 6's shores, Kob cast his line into the deep where Big Jimmy was said to lurk. 
@@ -95,7 +95,8 @@
                     <br><br>
                     In the end, despite the challenges and setbacks, Kob emerged victorious. Big Jimmy, a testament to the untamed spirit of Pond 6's aquatic realm, was brought ashore—a trophy that spoke of both skill and resilience.
                     Among the tales whispered among local anglers, one stood out—the bait that lured Big Jimmy to the hook was none other than the spunky sperm, famously used in the capture of his rumored father, the Goliath Sloppy Mouth. This detail added another layer of mystique to Big Jimmy's capture, reaffirming the storied tradition of Pond 6 and the enduring allure of its elusive giants.
-               </section>
+                    </p>
+                </section>
             </div>
         </main>
     </div>

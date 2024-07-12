@@ -160,13 +160,13 @@ body {
 
 .LB-text {
     display: flex;
+    margin-right: 50px;
     align-items: center;
 }
 
 .LBPics-inner{
-    max-height: 400px;
-    max-width: 200px;
-    margin-right: 10px;
+    max-height: auto;
+    max-width: 65%;
     border: 5px solid #5f3b3b;
     border-radius: 5px;
 }

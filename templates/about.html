@@ -4,28 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="Images/ico.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='Images/ico.png') }}">
 </head>
 <body class="page-default">
     <div class="wrapper">
         <header class="header-default">
-            <img src="Images/Sloppy.png" class="Logo">
+            <img src="{{ url_for('static', filename='Images/Sloppy.png') }}" class="Logo">
             <div class="header-text">
                 <h1>About Us</h1>
             </div>
         </header>
         <nav class="nav-default">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="database.html">SlopBase</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">SlopBase</a></li>
+                <li><a href="{{ url_for('signup') }}">Leaderboard</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('view_bookbag') }}">Contact</a></li>
             </ul>
         </nav>
         <main class="main-default">
-
 
             <h2 style="font-size: 30px;">About Us</h2>
             <br>
@@ -41,13 +40,12 @@
                 </p>
             </section>
 
-
             <br>
             <h2 style="font-size: 30px;">Meet Our Founders</h2>
             <br>
             <h class="SamHeader" style="font-size: 25px;"><b>Samuel Buckler</b></h>
             <div class="founder-image-and-text">
-            <img src="Images/zzz2.png" class="founder-image" title="Sam: Lead Dev">
+            <img src="{{ url_for('static', filename='Images/zzz2.png') }}" class="founder-image" title="Sam: Lead Dev">
             <section id="founders" class="section-default">
                 <div class="founders-content">
                         <p class="founder-description">
@@ -61,11 +59,10 @@
             </section> 
             </div>
 
-
             <br>
             <h class="HunterHeader" style="font-size: 25px;"><b>Hunter Baker</b></h>
             <div class="founder-image-and-text">
-            <img src="Images/zzz.png" class="founder-image" title="Hunter: Co Dev">
+            <img src="{{ url_for('static', filename='Images/zzz.png') }}" class="founder-image" title="Hunter: Co Dev">
             <section id="founders" class="section-default">
                 <div class="founders-content">
                         <p class="founder-description">
@@ -79,7 +76,7 @@
             <br>
             <h class="JakobHeader" style="font-size: 25px;"><b>Jakob Bennie</b></h>
             <div class="founder-image-and-text">
-            <img src="Images/zzz3.png" class="founder-image" title="Kob: BIG FOR US">
+            <img src="{{ url_for('static', filename='Images/zzz3.png') }}" class="founder-image" title="Kob: BIG FOR US">
             <section id="founders" class="section-default">
                 <div class="founders-content">
                         <p class="founder-description">
@@ -91,10 +88,6 @@
             </section> 
             </div>
 
-            
-            </section> 
-        </main>
-            </section>
         </main>
     </div>
     <footer class="footer-default">
