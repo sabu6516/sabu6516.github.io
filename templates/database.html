@@ -25,13 +25,10 @@
             </ul>
         </nav>
         <main class="main-default">
-            <h2>Number of Catches per Person</h2>
             <img src="{{ url_for('static', filename='number_of_catches_per_person.png') }}" alt="Number of Catches per Person">
 
-            <h2>Number of Catches per Bait</h2>
             <img src="{{ url_for('static', filename='number_of_catches_per_bait.png') }}" alt="Number of Catches per Bait">
 
-            <h2>Catches by Location</h2>
             <img src="{{ url_for('static', filename='number_of_catches_by_location.png') }}" alt="Number of Catches by Location">
 
             <h2>All Fish Caught</h2>
@@ -71,6 +68,12 @@
             </section>
         </main>
     </div>
+    <br>
+    <main class="main-default">
+        <section id="download-csv-section" class="section-default">
+            <a href="{{ url_for('download_csv') }}" class="btn btn-secondary">Download Fish Data as CSV</a>
+        </section>
+    </main>
     <footer class="footer-default">
         <p>&copy; 2024 SMF Co.</p>
     </footer>

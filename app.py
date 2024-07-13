@@ -1,10 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 import sqlite3
 from datetime import datetime
+import matplotlib
+matplotlib.use('Agg')  # Use 'Agg' backend for matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import csv
 import os
+from io import BytesIO
+import base64
 
 app = Flask(__name__)
 
@@ -145,8 +150,15 @@ def plot_number_of_catches_per_person(df):
     plt.ylabel('Number of Catches')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('static/number_of_catches_per_person.png')
+
+    # Save plot to BytesIO
+    img_bytes = BytesIO()
+    plt.savefig(img_bytes, format='png')
+    img_bytes.seek(0)
+    img_base64 = base64.b64encode(img_bytes.read()).decode('utf-8')
+
     plt.close()
+    return img_base64
 
 # Function to create a plot for the number of catches per bait
 def plot_number_of_catches_per_bait(df):
@@ -157,9 +169,17 @@ def plot_number_of_catches_per_bait(df):
     plt.ylabel('Number of Catches')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('static/number_of_catches_per_bait.png')
-    plt.close()
 
+    # Save plot to BytesIO
+    img_bytes = BytesIO()
+    plt.savefig(img_bytes, format='png')
+    img_bytes.seek(0)
+    img_base64 = base64.b64encode(img_bytes.read()).decode('utf-8')
+
+    plt.close()
+    return img_base64
+
+# Function to create a plot for the number of catches by location
 def plot_by_location(df):
     plt.figure(figsize=(10, 6))
     sns.countplot(x='location', data=df)
@@ -168,8 +188,42 @@ def plot_by_location(df):
     plt.ylabel('Number of Catches')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('static/number_of_catches_by_location.png')
+
+    # Save plot to BytesIO
+    img_bytes = BytesIO()
+    plt.savefig(img_bytes, format='png')
+    img_bytes.seek(0)
+    img_base64 = base64.b64encode(img_bytes.read()).decode('utf-8')
+
     plt.close()
+    return img_base64
+
+@app.route('/download_csv')
+def download_csv():
+    try:
+        conn = sqlite3.connect(DB_FILE)
+        c = conn.cursor()
+
+        # Fetch all entries from the fishcaught table
+        c.execute('''SELECT id, fishcaught, weight, bait, location, dateofcatch, timeofcatch, catcher FROM fishcaught''')
+        entries = c.fetchall()
+
+        conn.close()
+
+        # Prepare CSV data
+        csv_filename = 'fish_data.csv'
+        csv_filepath = os.path.join(app.root_path, 'static', csv_filename)
+
+        with open(csv_filepath, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['ID', 'Fish Caught', 'Weight', 'Bait', 'Location', 'Date of Catch', 'Time of Catch', 'Catcher'])
+            writer.writerows(entries)
+
+        # Send CSV file as a download
+        return send_file(csv_filepath, as_attachment=True)
+
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
 
 # Route for other pages
 @app.route('/')
