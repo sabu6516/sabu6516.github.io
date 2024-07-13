@@ -25,36 +25,38 @@
             </ul>
         </nav>
         <main class="main-default">
-            <section id="fish-list" class="section-default">
-                <!-- Display fish list here -->
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Fish Caught</th>
-                            <th>Size of Fish</th>
-                            <th>Bait</th>
-                            <th>Pond Caught</th>
-                            <th>Date of Catch</th>
-                            <th>Time of Catch</th>
-                            <th>Catcher</th>
-                            <th>Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for fish in fish_list %}
-                        <tr>
-                            <td>{{ fish.fishcaught }}</td>
-                            <td>{{ fish.sizeoffish }}</td>
-                            <td>{{ fish.bait }}</td>
-                            <td>{{ fish.pondcaught }}</td>
-                            <td>{{ fish.dateofcatch }}</td>
-                            <td>{{ fish.timeofcatch }}</td>
-                            <td>{{ fish.catcher }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </section>
+            <h2>Number of Catches per Person</h2>
+    <img src="{{ url_for('static', filename='number_of_catches_per_person.png') }}" alt="Number of Catches per Person">
+
+    <h2>Number of Catches per Bait</h2>
+    <img src="{{ url_for('static', filename='number_of_catches_per_bait.png') }}" alt="Number of Catches per Bait">
+
+    <h2>All Fish Caught</h2>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Fish Caught</th>
+                <th>Size of Fish</th>
+                <th>Bait</th>
+                <th>Pond Caught</th>
+                <th>Date of Catch</th>
+                <th>Time of Catch</th>
+                <th>Catcher</th>
+            </tr>
+            {% for fish in fish_list %}
+            <tr>
+                <td>{{ fish[0] }}</td>
+                <td>{{ fish[1] }}</td>
+                <td>{{ fish[2] }}</td>
+                <td>{{ fish[3] }}</td>
+                <td>{{ fish[4] }}</td>
+                <td>{{ fish[5] }}</td>
+                <td>{{ fish[6] }}</td>
+                <td>{{ fish[7] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
             <section id="add-fish-section" class="section-default">
                 <!-- Include the add fish form directly here -->
                 {% include 'add_fish_form.html' %}

@@ -1,28 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 from datetime import datetime
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
 
 app = Flask(__name__)
 
 # SQLite database file path
 DB_FILE = 'fish.db'
-
-# Function to create the database table
-def create_table():
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS fishcaught
-                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  fishcaught TEXT,
-                  sizeoffish TEXT,
-                  bait TEXT,
-                  pondcaught INTEGER,
-                  dateofcatch DATE,
-                  timeofcatch TEXT,
-                  catcher TEXT,
-                  image BLOB)''')
-    conn.commit()
-    conn.close()
 
 # Route to handle adding a new fish caught
 @app.route('/add_fish', methods=['POST'])
@@ -60,8 +46,39 @@ def database():
     c = conn.cursor()
     c.execute('''SELECT * FROM fishcaught''')
     fish_list = c.fetchall()
+
+    df = pd.DataFrame(fish_list, columns=['id', 'fishcaught', 'sizeoffish', 'bait', 'pondcaught', 'dateofcatch', 'timeofcatch', 'catcher', 'image'])
+
+    # Create plots
+    plot_number_of_catches_per_person(df)
+    plot_number_of_catches_per_bait(df)
+
     conn.close()
     return render_template('database.html', fish_list=fish_list)
+
+# Function to create a plot for the number of catches per person
+def plot_number_of_catches_per_person(df):
+    plt.figure(figsize=(10, 6))
+    sns.countplot(x='catcher', data=df)
+    plt.title('Number of Catches per Person')
+    plt.xlabel('Catcher')
+    plt.ylabel('Number of Catches')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('static/number_of_catches_per_person.png')
+    plt.close()
+
+# Function to create a plot for the number of catches per bait
+def plot_number_of_catches_per_bait(df):
+    plt.figure(figsize=(10, 6))
+    sns.countplot(x='bait', data=df)
+    plt.title('Number of Catches per Bait')
+    plt.xlabel('Bait')
+    plt.ylabel('Number of Catches')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('static/number_of_catches_per_bait.png')
+    plt.close()
 
 # Route for other pages
 @app.route('/')
@@ -71,7 +88,6 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
 
 @app.route('/contact')
 def contact():
