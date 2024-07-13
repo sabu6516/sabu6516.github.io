@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlopBase</title>
+    <title>SlopBase - Database</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='Images/ico.png') }}">
 </head>
@@ -26,40 +26,48 @@
         </nav>
         <main class="main-default">
             <h2>Number of Catches per Person</h2>
-    <img src="{{ url_for('static', filename='number_of_catches_per_person.png') }}" alt="Number of Catches per Person">
+            <img src="{{ url_for('static', filename='number_of_catches_per_person.png') }}" alt="Number of Catches per Person">
 
-    <h2>Number of Catches per Bait</h2>
-    <img src="{{ url_for('static', filename='number_of_catches_per_bait.png') }}" alt="Number of Catches per Bait">
+            <h2>Number of Catches per Bait</h2>
+            <img src="{{ url_for('static', filename='number_of_catches_per_bait.png') }}" alt="Number of Catches per Bait">
 
-    <h2>All Fish Caught</h2>
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Fish Caught</th>
-                <th>Size of Fish</th>
-                <th>Bait</th>
-                <th>Pond Caught</th>
-                <th>Date of Catch</th>
-                <th>Time of Catch</th>
-                <th>Catcher</th>
-            </tr>
-            {% for fish in fish_list %}
-            <tr>
-                <td>{{ fish[0] }}</td>
-                <td>{{ fish[1] }}</td>
-                <td>{{ fish[2] }}</td>
-                <td>{{ fish[3] }}</td>
-                <td>{{ fish[4] }}</td>
-                <td>{{ fish[5] }}</td>
-                <td>{{ fish[6] }}</td>
-                <td>{{ fish[7] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <br>
+            <h2>Catches by Location</h2>
+            <img src="{{ url_for('static', filename='number_of_catches_by_location.png') }}" alt="Number of Catches by Location">
+
+            <h2>All Fish Caught</h2>
+            {% if fish_list %}
+                <table border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Fish Caught</th>
+                        <th>Weight</th>
+                        <th>Bait</th>
+                        <th>Location</th>
+                        <th>Date of Catch</th>
+                        <th>Time of Catch</th>
+                        <th>Catcher</th>
+                    </tr>
+                    {% for fish in fish_list %}
+                    <tr>
+                        <td>{{ fish[0] }}</td>
+                        <td>{{ fish[1] }}</td>
+                        <td>{{ fish[2] }}</td>
+                        <td>{{ fish[3] }}</td>
+                        <td>{{ fish[4] }}</td>
+                        <td>{{ fish[5] }}</td>
+                        <td>{{ fish[6] }}</td>
+                        <td>{{ fish[7] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No fish caught yet.</p>
+            {% endif %}
+            <br>
+
+            <!-- Button to Add Fish Form -->
             <section id="add-fish-section" class="section-default">
-                <!-- Include the add fish form directly here -->
-                {% include 'add_fish_form.html' %}
+                <a href="{{ url_for('add_fish_form') }}" class="btn btn-primary">Add New Fish</a>
             </section>
         </main>
     </div>

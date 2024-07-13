@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Fish Form</title>
+    <title>SlopBase - Database</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='Images/ico.png') }}">
 </head>
+<body class="page-default">
+    <div class="wrapper">
+        <header class="header-default">
+            <img src="{{ url_for('static', filename='Images/Sloppy.png') }}" class="Logo">
+            <div class="header-text">
+                <h1>SlopBase</h1>
+            </div>
+        </header>
+        <nav class="nav-default">
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('database') }}">SlopBase</a></li>
+                <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
 <body class="page-default">
     <div class="wrapper">
         <main class="main-default">
@@ -20,47 +37,41 @@
                     </select>
                     <br><br>
                     
-                    <label for="size-of-fish">Size of Fish:</label>
-                    <select id="size-of-fish" name="size_of_fish">
-                        <option value="Baby">Baby</option>
-                        <option value="Small">Small</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Large">Large</option>
-                        <option value="Monster">Monster</option>
-                    </select>
+                    <label for="weight">Weight:</label>
+                    <input type="number" id="weight" name="weight" min="1" step="1" placeholder="Enter weight">
                     <br><br>
                     
                     <label for="bait">Bait:</label>
                     <select id="bait" name="bait">
-                        <option value="Spunky">Spunky</option>
                         <option value="Buzzbait">Buzzbait</option>
-                        <option value="Crankbait">Crankbait</option>
                         <option value="Chatterbait">Chatterbait</option>
-                        <option value="Jitterbug">Jitterbug</option>
+                        <option value="Crankbait">Crankbait</option>
                         <option value="Frog">Frog</option>
-                        <option value="Whopper Plopper">Whopper Plopper</option>
+                        <option value="Jerkbait">Jerkbait</option>
+                        <option value="Jitterbug">Jitterbug</option>
+                        <option value="Popper">Popper</option>
+                        <option value="Soft Plastic">Soft Plastic</option>
+                        <option value="Spinner">Spinner</option>
+                        <option value="Spoon">Spoon</option>
                         <option value="Texas Rig">Texas Rig</option>
                         <option value="Wacky Worm">Wacky Worm</option>
-                        <option value="Jerkbait">Jerkbait</option>
-                        <option value="Soft Plastic">Soft Plastic</option>
-                        <option value="Popper">Popper</option>
-                        <option value="Jig">Jig</option>
-                        <option value="Swimbait">Swimbait</option>
-                        <option value="Misc">Misc</option>
-                        <option value="Spoon">Spoon</option>
+                        <option value="Whopper Plopper">Whopper Plopper</option>
                         <option value="Misc Topwater">Misc Topwater</option>
-                        <option value="Spinner">Spinner</option>
+                        <option value="Misc">Misc</option>
                     </select>
                     <br><br>
                     
-                    <label for="pond-caught">Pond Caught:</label>
-                    <select id="pond-caught" name="pond_caught">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
+                    <label for="location">Location:</label>
+                    <select id="location" name="location">
+                        <option value="Cabin (pond 1)">Cabin (pond 1)</option>
+                        <option value="Cabin (pond 2)">Cabin (pond 2)</option>
+                        <option value="Cabin (pond 3)">Cabin (pond 3)</option>
+                        <option value="Cabin (pond 4)">Cabin (pond 4)</option>
+                        <option value="Cabin (pond 5)">Cabin (pond 5)</option>
+                        <option value="Cabin (pond 6)">Cabin (pond 6)</option>
+                        <option value="Lake Holiday">Lake Holiday</option>
+                        <option value="Sheppard Pond">Sheppard Pond</option>
+                        <option value="Other">Other</option>
                     </select>
                     <br><br>
                     
@@ -78,13 +89,13 @@
                     
                     <label for="catcher">Catcher:</label>
                     <select id="catcher" name="catcher">
-                        <option value="Sam">Sam</option>
+                        <option value="Bob">Bob</option>
+                        <option value="Colin">Colin</option>
+                        <option value="Emily">Emily</option>
                         <option value="Hunter">Hunter</option>
                         <option value="Kob">Kob</option>
                         <option value="May">May</option>
-                        <option value="Colin">Colin</option>
-                        <option value="Emily">Emily</option>
-                        <option value="Bob">Bob</option>
+                        <option value="Sam">Sam</option>
                         <option value="Other">Other</option>
                     </select>
                     <br><br>
@@ -93,8 +104,36 @@
                     <input type="text" id="image-url" name="image_url" placeholder="Enter URL">
                     <br><br>
                     
-                    <input type="submit" value="Add Fish">
+                    <input type="submit" name="add_entry" value="Add Fish">
                 </form>
+                <br>
+                <br>
+                <br>
+                <form action="/delete_fish" method="POST">
+                    <label for="delete-entry">Select Entry to Delete:</label>
+                    <select id="delete-entry" name="delete_entry">
+                        {% for entry in entries %}
+                        <option value="{{ entry[0] }}">
+                            Fish Caught: {{ entry[1] }},
+                            Weight: {{ entry[2] }},
+                            Bait: {{ entry[3] }},
+                            Location: {{ entry[4] }},
+                            Date of Catch: {{ entry[5] }},
+                            Time of Catch: {{ entry[6] }},
+                            Catcher: {{ entry[7] }},
+                            Image: {{ entry[8] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" name="delete_entry_btn" value="Delete Entry">
+                </form>
+
+                {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+                {% endif %}
+                {% if message %}
+                <p style="color: green;">{{ message }}</p>
+                {% endif %}
             </section>
         </main>
     </div>

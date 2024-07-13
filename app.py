@@ -4,54 +4,134 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
 # SQLite database file path
 DB_FILE = 'fish.db'
 
-# Route to handle adding a new fish caught
+# Function to initialize the database and create the table if it doesn't exist
+def init_db():
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+
+    # Create fishcaught table if it doesn't exist
+    c.execute('''CREATE TABLE IF NOT EXISTS fishcaught (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    fishcaught VARCHAR(255) NOT NULL,
+                    weight REAL,  -- Allow weight to be nullable
+                    bait VARCHAR(100) NOT NULL,
+                    location VARCHAR(100) NOT NULL,
+                    dateofcatch DATE NOT NULL,
+                    timeofcatch TIME NOT NULL,
+                    catcher VARCHAR(100) NOT NULL,
+                    image TEXT
+                )''')
+
+    conn.commit()
+    conn.close()
+
+# Initialize the database on application startup
+init_db()
+
+# Route to add a new fish caught
 @app.route('/add_fish', methods=['POST'])
 def add_fish():
     if request.method == 'POST':
-        fishcaught = request.form['fish_caught']
-        sizeoffish = request.form['size_of_fish']
-        bait = request.form['bait']
-        pondcaught = request.form['pond_caught']
-        dateofcatch = request.form['date_of_catch']  # Get date of catch from form
-        timeofcatch = request.form['time_of_catch']
-        catcher = request.form['catcher']
-        image_url = request.form['image_url'] if 'image_url' in request.form else None
+        try:
+            fish_caught = request.form['fish_caught']
+            weight = request.form['weight']
+            bait = request.form['bait']
+            location = request.form['location']
+            date_of_catch = request.form['date_of_catch']
+            time_of_catch = request.form['time_of_catch']
+            catcher = request.form['catcher']
+            image_url = request.form['image_url']
 
-        conn = sqlite3.connect(DB_FILE)
-        c = conn.cursor()
-        c.execute('''INSERT INTO fishcaught
-                     (fishcaught, sizeoffish, bait, pondcaught, dateofcatch, timeofcatch, catcher, image)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
-                  (fishcaught, sizeoffish, bait, pondcaught, dateofcatch, timeofcatch, catcher, image_url))
-        conn.commit()
-        conn.close()
+            # Validate form data
+            if not fish_caught or not bait or not location or not date_of_catch or not time_of_catch or not catcher:
+                return render_template('add_fish_form.html', error_message='Error: All fields are required!')
 
-        return redirect(url_for('index'))
+            # Connect to SQLite database
+            conn = sqlite3.connect(DB_FILE)
+            c = conn.cursor()
+
+            # Insert into database
+            c.execute('''INSERT INTO fishcaught (fishcaught, weight, bait, location, dateofcatch, timeofcatch, catcher, image)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+                      (fish_caught, weight, bait, location, date_of_catch, time_of_catch, catcher, image_url))
+            conn.commit()
+            conn.close()
+
+            # Redirect to add_fish_form with success message
+            return redirect(url_for('add_fish_form', message='Fish added successfully!'))
+
+        except Exception as e:
+            return render_template('add_fish_form.html', error_message=f'Error adding fish: {str(e)}')
+
+    return redirect(url_for('add_fish_form'))
 
 # Route to display form for adding a new fish caught
 @app.route('/add_fish_form')
 def add_fish_form():
-    return render_template('add_fish_form.html')
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+
+    # Fetch all entries from the fishcaught table
+    c.execute('''SELECT id, fishcaught, weight, bait, location, dateofcatch, timeofcatch, catcher, image FROM fishcaught''')
+    entries = c.fetchall()
+
+    conn.close()
+
+    return render_template('add_fish_form.html', entries=entries)
+
+@app.route('/delete_fish', methods=['POST'])
+def delete_fish():
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+
+    try:
+        entry_id = request.form['delete_entry']
+
+        # Delete the selected entry from the database
+        c.execute('''DELETE FROM fishcaught WHERE id = ?''', (entry_id,))
+        conn.commit()
+
+        message = 'Entry deleted successfully!'
+    except Exception as e:
+        print(str(e))
+        message = 'Error: Failed to delete entry.'
+
+    # Fetch all entries from the fishcaught table after deletion
+    c.execute('''SELECT id, fishcaught, weight, bait, location, dateofcatch, timeofcatch, catcher, image FROM fishcaught''')
+    entries = c.fetchall()
+
+    conn.close()
+
+    return render_template('add_fish_form.html', entries=entries, message=message)
 
 # Route to display all fish caught
 @app.route('/database')
 def database():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
-    c.execute('''SELECT * FROM fishcaught''')
-    fish_list = c.fetchall()
 
-    df = pd.DataFrame(fish_list, columns=['id', 'fishcaught', 'sizeoffish', 'bait', 'pondcaught', 'dateofcatch', 'timeofcatch', 'catcher', 'image'])
+    # Check if the table exists
+    c.execute('''SELECT count(name) FROM sqlite_master WHERE type='table' AND name='fishcaught' ''')
+    table_exists = c.fetchone()[0]
 
-    # Create plots
-    plot_number_of_catches_per_person(df)
-    plot_number_of_catches_per_bait(df)
+    fish_list = None
+    if table_exists:
+        c.execute('''SELECT * FROM fishcaught''')
+        fish_list = c.fetchall()
+
+        # Create plots if data exists
+        if fish_list:
+            df = pd.DataFrame(fish_list, columns=['id', 'fishcaught', 'weight', 'bait', 'location', 'dateofcatch', 'timeofcatch', 'catcher', 'image'])
+            plot_number_of_catches_per_person(df)
+            plot_number_of_catches_per_bait(df)
+            plot_by_location(df)
 
     conn.close()
     return render_template('database.html', fish_list=fish_list)
@@ -78,6 +158,17 @@ def plot_number_of_catches_per_bait(df):
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig('static/number_of_catches_per_bait.png')
+    plt.close()
+
+def plot_by_location(df):
+    plt.figure(figsize=(10, 6))
+    sns.countplot(x='location', data=df)
+    plt.title('Number of Catches by Location')
+    plt.xlabel('Location')
+    plt.ylabel('Number of Catches')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('static/number_of_catches_by_location.png')
     plt.close()
 
 # Route for other pages
