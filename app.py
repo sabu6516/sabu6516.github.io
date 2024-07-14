@@ -122,24 +122,23 @@ def database():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
 
-    # Check if the table exists
-    c.execute('''SELECT count(name) FROM sqlite_master WHERE type='table' AND name='fishcaught' ''')
-    table_exists = c.fetchone()[0]
+    # Fetch all entries from the fishcaught table
+    c.execute('''SELECT * FROM fishcaught''')
+    fish_list = c.fetchall()
 
-    fish_list = None
-    if table_exists:
-        c.execute('''SELECT * FROM fishcaught''')
-        fish_list = c.fetchall()
+    # Create DataFrame for plotting
+    df = pd.DataFrame(fish_list, columns=['id', 'fishcaught', 'weight', 'bait', 'location', 'dateofcatch', 'timeofcatch', 'catcher', 'image'])
 
-        # Create plots if data exists
-        if fish_list:
-            df = pd.DataFrame(fish_list, columns=['id', 'fishcaught', 'weight', 'bait', 'location', 'dateofcatch', 'timeofcatch', 'catcher', 'image'])
-            plot_number_of_catches_per_person(df)
-            plot_number_of_catches_per_bait(df)
-            plot_by_location(df)
+    # Generate plots
+    catches_per_person_img = plot_number_of_catches_per_person(df)
+    catches_per_bait_img = plot_number_of_catches_per_bait(df)
+    catches_by_location_img = plot_by_location(df)
 
     conn.close()
-    return render_template('database.html', fish_list=fish_list)
+    return render_template('database.html', fish_list=fish_list,
+                           catches_per_person_img=catches_per_person_img,
+                           catches_per_bait_img=catches_per_bait_img,
+                           catches_by_location_img=catches_by_location_img)
 
 # Function to create a plot for the number of catches per person
 def plot_number_of_catches_per_person(df):

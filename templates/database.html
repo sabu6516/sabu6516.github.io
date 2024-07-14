@@ -25,11 +25,11 @@
             </ul>
         </nav>
         <main class="main-default">
-            <img src="{{ url_for('static', filename='number_of_catches_per_person.png') }}" alt="Number of Catches per Person">
+            <img src="data:image/png;base64,{{ catches_per_person_img }}" alt="Number of Catches per Person">
 
-            <img src="{{ url_for('static', filename='number_of_catches_per_bait.png') }}" alt="Number of Catches per Bait">
+            <img src="data:image/png;base64,{{ catches_per_bait_img }}" alt="Number of Catches per Bait">
 
-            <img src="{{ url_for('static', filename='number_of_catches_by_location.png') }}" alt="Number of Catches by Location">
+            <img src="data:image/png;base64,{{ catches_by_location_img }}" alt="Number of Catches by Location">
 
             <h2>All Fish Caught</h2>
             {% if fish_list %}
